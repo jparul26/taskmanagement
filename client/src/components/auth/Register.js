@@ -121,7 +121,7 @@ return (
                     marginBottom:"2rem"
                   }}
                   type="submit"
-                  className="btn btn-large waves-effect waves-light hoverable blue accent-3"
+                  class="waves-effect waves-light btn"
                 >
                   Sign up
                 </button>

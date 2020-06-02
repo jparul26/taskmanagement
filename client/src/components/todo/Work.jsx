@@ -10,16 +10,8 @@ import ParticlesBg from "particles-bg";
 import classnames from "classnames";
 import Card from '@material-ui/core/Card'
 import './get.css'
-var sectionStyle = {
-  position : 'absolute',
-  width: "100%",
-  height: "auto",
- background: `url(${process.env.PUBLIC_URL}/h2.jpg)` ,
- backgroundPosition: 'center',
- backgroundSize: 'cover',
- backgroundRepeat: 'no-repeat'
-};
-class gettodo extends Component {
+
+class Work extends Component {
     constructor() {
         super();
         this.state = {
@@ -56,8 +48,53 @@ class gettodo extends Component {
         return this.state.array.map(arr=>{
            if(arr.todoid ===this.props.auth.user.id )
            if(arr.done === "Todo")
+           if(arr.label=="Work")
            return(
-             <div >
+             
+            <div>
+            <Card >
+         <div  style={{width:"100%"}}>
+       
+         <ul class="collapsible">
+        <li>
+         <div class="collapsible-header" style={{color:"#db53b7"}}><i class="material-icons">filter_drama</i><i>{arr.title}</i>
+         <span class="new badge" data-badge-caption=" ">{arr.label}</span>
+        </div>
+        <br/>
+        <div class="collapsible-header" >
+          <p style={{color:"grey",marginLeft:"3%"}}>Due Date: {arr.dueDate.split("T")[0]}</p>
+          <br/>
+           <p style={{color:"grey",marginLeft:"3%"}}>Time: {arr.dueDate.split("T")[1].split(".")[0]}</p>
+         </div>
+            <div class="collapsible-body" style={{fontFamily:"monospace"}}><span><p>{arr.tododescription}</p></span>
+           <div>
+         <Link
+             to={`/edit/${arr._id}`}>
+             <B  style={{fontSize:"30px"}}/>
+           </Link>
+          <span style={{marginLeft:"5%"}}>
+             <D id={arr._id} onClick={()=>this.handleDeleteTodo(arr._id)} style={{fontSize:"30px"}}>
+               Delete
+             </D>
+           </span>
+         </div>
+         </div>
+         </li>
+       </ul>
+       </div>
+       </Card>
+       </div>
+           )
+        })
+        
+}
+fetch_doing() { 
+  return this.state.array.map(arr=>{
+     if(arr.todoid ===this.props.auth.user.id )
+     if(arr.done === "Doing")
+     if(arr.label=="Work")
+     return(
+      <div>
                <Card >
             <div  style={{width:"100%"}}>
           
@@ -90,24 +127,29 @@ class gettodo extends Component {
           </div>
           </Card>
           </div>
-          
-   
-           )
-        })
-        
+     )
+    
+     
+     
+     
+    
+  })
+  
 }
-fetch_doing() { 
+fetch_done() { 
   return this.state.array.map(arr=>{
      if(arr.todoid ===this.props.auth.user.id )
-     if(arr.done === "Doing")
+     if(arr.done === "Done")
+     if(arr.label=="Work")
      return(
+       
       <div>
                <Card >
             <div  style={{width:"100%"}}>
           
             <ul class="collapsible">
            <li>
-            <div class="collapsible-header" style={{color:"#e69155"}}><i class="material-icons">filter_drama</i><i>{arr.title}</i>
+            <div class="collapsible-header" style={{color:"#db53b7"}}><i class="material-icons">filter_drama</i><i>{arr.title}</i>
             <span class="new badge" data-badge-caption=" ">{arr.label}</span>
            </div>
            <br/>
@@ -134,56 +176,7 @@ fetch_doing() {
           </div>
           </Card>
           </div>
-          
-     )
     
-     
-     
-     
-    
-  })
-  
-}
-fetch_done() { 
-  return this.state.array.map(arr=>{
-     if(arr.todoid ===this.props.auth.user.id )
-     if(arr.done === "Done")
-     return(
-       
-      <div>
-      <Card >
-   <div  style={{width:"100%"}}>
- 
-   <ul class="collapsible">
-  <li>
-   <div class="collapsible-header" style={{color:"##6580f0"}}><i class="material-icons">filter_drama</i><i>{arr.title}</i>
-   <span class="new badge" data-badge-caption=" ">{arr.label}</span>
-  </div>
-  <br/>
-  <div class="collapsible-header" >
-             <p style={{color:"grey",marginLeft:"3%"}}>Due Date: {arr.dueDate.split("T")[0]}</p>
-             <br/>
-              <p style={{color:"grey",marginLeft:"3%"}}>Time: {arr.dueDate.split("T")[1].split(".")[0]}</p>
-        </div>
-      <div class="collapsible-body" style={{fontFamily:"monospace"}}><span><p>{arr.tododescription}</p></span>
-     <div>
-   <Link
-       to={`/edit/${arr._id}`}>
-       <B  style={{fontSize:"30px"}}/>
-     </Link>
-    <span style={{marginLeft:"5%"}}>
-       <D id={arr._id} onClick={()=>this.handleDeleteTodo(arr._id)} style={{fontSize:"30px"}}>
-         Delete
-       </D>
-     </span>
-   </div>
-   </div>
-   </li>
- </ul>
- </div>
- </Card>
- </div>
- 
      )
      
      
@@ -193,9 +186,8 @@ fetch_done() {
 }
 render() {
     return (
-   
-      <div >
-        <div style={{marginTop:"10%"}} >
+    
+      <div style={{marginTop:"10%"}}>
       <div class="container">
       <div  class="row">
 
@@ -228,13 +220,12 @@ render() {
         </div>
         </div>
         </div>
-        </div>
        
     )
 }
 }
 
-gettodo.propTypes = {
+Work.propTypes = {
     auth: PropTypes.object.isRequired
   };
   
@@ -244,4 +235,4 @@ gettodo.propTypes = {
   
   export default connect(
     mapStateToProps
-  )(gettodo);
+  )(Work);

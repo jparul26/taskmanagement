@@ -18,7 +18,7 @@ export const registerUser = (userData, history) => dispatch => {
       })
     );
 };
-export const FacebookUserLogin = userData => dispatch => {
+export const FacebookUserLogin = (userData, history) => dispatch => {
   axios
     .post("api/users/facebook", userData)
     .then(res => {

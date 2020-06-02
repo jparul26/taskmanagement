@@ -23,6 +23,10 @@ const TodoSchema = new Schema({
         type: Date,
         default: Date.now
     },
+    label:{
+         type:String,
+         default :""
+    },
    done:{
        type: String,
    }

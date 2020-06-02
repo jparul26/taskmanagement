@@ -160,7 +160,8 @@ router.post("/register", (req, res) => {
       title: req.body.title,
       done: req.body.done,
       dueDate:req.body.dueDate,
-      tododescription:req.body.tododescription
+      tododescription:req.body.tododescription,
+      label:req.body.label
     });
     newTodo
     .save()
@@ -177,8 +178,25 @@ router.post("/register", (req, res) => {
   })
  });
 
+ router.get(`/edit/:id`,(req,res)=>{
+   const _id = req.params.id;
+   Todo.findOne({_id})
+   .then(docs=> res.json(docs))
+   .catch(err => console.log(err));
+ });
+
+ router.put(`/update/:id`, (req,res)=>{
+   Todo.findOneAndUpdate({_id:req.params.id},{$set:{title:req.body.title, done:req.body.done , tododescription:req.body.tododescription, dueDate: req.body.dueDate, label:req.body.label}},{new: true ,useFindAndModify: false})
+   .then(docs=> res.send(docs))
+   .catch(err => console.log("update err"));
+ });
 
 
+router.delete(`/delete/:id`,(req,res)=>{
+  Todo.findOneAndDelete({_id:req.params.id})
+  .then(docs=> res.json({message:"success"}))
+  .catch(err=> console.log(err))
+})
 
 
 
